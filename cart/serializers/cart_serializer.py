@@ -11,6 +11,7 @@ class CartSerializer(serializers.ModelSerializer):
   
   product = ProductSerializer(read_only=True)
   cart_quantity = serializers.IntegerField(write_only=True)
+  product_stock = serializers.IntegerField(write_only=True)
 
   class Meta:
     model = Cart
@@ -24,11 +25,11 @@ class CartSerializer(serializers.ModelSerializer):
   
   def validate(self, data):
     
-    product = data.get('product')
+    product_stock = data.get('product_stock')
     quantity = data.get('quantity')
     cart_quantity = data.get('cart_quantity')
 
-    if quantity + cart_quantity > product.stock:
+    if quantity + cart_quantity > product_stock:
       raise serializers.ValidationError('Quantity exceeds stock')
     
     return data

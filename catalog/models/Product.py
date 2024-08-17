@@ -2,6 +2,9 @@
 
 from django.db import models
 
+from catalog.models.Brand import Brand
+from catalog.models.Category import Category
+
 class Product(models.Model):
 
   id = models.AutoField(primary_key=True)
@@ -12,7 +15,8 @@ class Product(models.Model):
   image_url = models.CharField(max_length=2000)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
-  category = models.ForeignKey('Category', on_delete=models.CASCADE)
+  category = models.ForeignKey(Category, on_delete=models.CASCADE)
+  brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.name
