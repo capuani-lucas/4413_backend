@@ -1,6 +1,7 @@
 
 
 from catalog.models.Product import Product
+from catalog.models.Category import Category
 
 class CatalogDAO():
 
@@ -15,3 +16,7 @@ class CatalogDAO():
   def get_products_by_category(self, category_id):
     products = Product.objects.filter(category=category_id)
     return products
+  
+  def get_categories(self):
+    categories = Category.objects.filter()
+    return categories

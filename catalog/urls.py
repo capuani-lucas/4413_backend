@@ -1,6 +1,6 @@
 from django.urls import path
 
-from catalog.views.catalog_view import CatalogByCategoryView, CatalogByIdView, CatalogView
+from catalog.views.catalog_view import CatalogByCategoryView, CatalogByIdView, CatalogGetCategoriesView, CatalogView
 
 urlpatterns = [
   path('', CatalogView.as_view(), name='catalog'),
@@ -8,4 +8,5 @@ urlpatterns = [
   path('category/<int:category_id>/', CatalogByCategoryView.as_view(), name='catalog_by_category'),
   # catalog by id
   path('<int:product_id>/', CatalogByIdView.as_view(), name='catalog_by_id'),
+  path('categories/', CatalogGetCategoriesView.as_view(), name='categories'),
 ]
