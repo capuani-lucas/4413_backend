@@ -2,8 +2,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from identity.dao.identity_dao import IdentityDAO
-
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
