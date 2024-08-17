@@ -75,7 +75,7 @@ class CartUpdateView(APIView):
     
     quantity = request.data.get('quantity', 1)
     data = {
-      'product': cart.product.id,
+      'product_stock': cart.product.stock,
       'quantity': quantity,
       'cart_quantity': 0
     }
@@ -115,7 +115,7 @@ class CartAddView(APIView):
     
     quantity = request.data.get('quantity', 1)
     data = {
-      'product': product.id,
+      'product_stock': product.stock,
       'cart_quantity': cart.quantity if cart else 0,
       'quantity': quantity
     }

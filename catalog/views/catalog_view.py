@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from catalog.dao.catalog_dao import CatalogDAO
+from catalog.serializers.brand_serializer import BrandSerializer
 from catalog.serializers.product_serializer import ProductSerializer
 from catalog.serializers.category_serializer import CategorySerializer
 from drf_yasg.utils import swagger_auto_schema
@@ -15,11 +16,29 @@ class CatalogView(APIView):
 
   @swagger_auto_schema(
     operation_description="Retrieve all products in the catalog",
+    manual_parameters=[
+      openapi.Parameter('brand', openapi.IN_QUERY, description="Filter by brand", type=openapi.TYPE_STRING),
+      openapi.Parameter('category', openapi.IN_QUERY, description="Filter by category", type=openapi.TYPE_INTEGER),
+      openapi.Parameter('search', openapi.IN_QUERY, description="Search by name", type=openapi.TYPE_STRING),
+      openapi.Parameter('sort_by', openapi.IN_QUERY, description="Sort by field", type=openapi.TYPE_STRING),
+    ],
     responses={200: ProductSerializer(many=True)},
   )
   def get(self, request):
+
+    brand = request.query_params.get('brand')
+    category = request.query_params.get('category')
+    search = request.query_params.get('search')
+    sort_by = request.query_params.get('sort_by')
+
+
     catalog_dao = CatalogDAO()
-    catalog = catalog_dao.get_all_products()
+    catalog = catalog_dao.get_all_products(
+      brand=brand,
+      category=category,
+      search=search,
+      sort_by=sort_by
+    )
     serializer = ProductSerializer(catalog, many=True)
 
     return Response({
@@ -88,4 +107,19 @@ class CatalogGetCategoriesView(APIView):
     serializer = CategorySerializer(categories, many=True)
     return Response({
       'categories': serializer.data
+    })
+  
+class CatalogGetBrandsView(APIView):
+
+  @swagger_auto_schema(
+    operation_description="Retrieve all brands in the catalog",
+    responses={200: BrandSerializer(many=True)},
+  )
+  def get(self, request):
+    catalog_dao = CatalogDAO()
+    brands = catalog_dao.get_brands()
+
+    serializer = BrandSerializer(brands, many=True)
+    return Response({
+      'brands': serializer.data
     })
