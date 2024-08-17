@@ -1,6 +1,6 @@
 from django.urls import path
 
-from identity.views.UserView import CreateUserView
+from identity.views.user_view import CreateUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [

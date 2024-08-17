@@ -2,7 +2,8 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 
-from identity.serializers.UserSerializer import UserSerializer
+from identity.dao.identity_dao import IdentityDAO
+from identity.serializers.user_serializer import UserSerializer
 
 class CreateUserView(generics.CreateAPIView):
   serializer_class = UserSerializer
@@ -18,7 +19,12 @@ class CreateUserView(generics.CreateAPIView):
 
     serializer = self.get_serializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    self.perform_create(serializer)
-    headers = self.get_success_headers(serializer.data)
-    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    identity_dao = IdentityDAO()
+    user = identity_dao.create_user(username=serializer.validated_data['username'], password=serializer.validated_data['password'])
+
+    serialized_user = UserSerializer(user)
+    return Response(serialized_user.data, status=status.HTTP_201_CREATED)
+
+    
     
