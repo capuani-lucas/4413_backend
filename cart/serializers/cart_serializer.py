@@ -9,6 +9,7 @@ from identity.serializers.user_serializer import UserSerializer
 
 class CartSerializer(serializers.ModelSerializer):
   
+  product = ProductSerializer(read_only=True)
   cart_quantity = serializers.IntegerField(write_only=True)
 
   class Meta:
