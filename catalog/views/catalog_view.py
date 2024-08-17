@@ -4,16 +4,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from catalog.dao.catalog_dao import CatalogDAO
-from catalog.serializers.catalog_serializer import CatalogSerializer
+from catalog.serializers.product_serializer import ProductSerializer
 
 class CatalogView(APIView):
 
-  serializer_class = CatalogSerializer
+  serializer_class = ProductSerializer
 
   def get(self, request):
     catalog_dao = CatalogDAO()
     catalog = catalog_dao.get_all_products()
-    serializer = CatalogSerializer(catalog, many=True)
+    serializer = ProductSerializer(catalog, many=True)
 
     return Response({
       'catalog': serializer.data
@@ -21,12 +21,12 @@ class CatalogView(APIView):
   
 class CatalogByCategoryView(APIView):
 
-  serializer_class = CatalogSerializer
+  serializer_class = ProductSerializer
 
   def get(self, request, category_id):
     catalog_dao = CatalogDAO()
     catalog = catalog_dao.get_products_by_category(category_id)
-    serializer = CatalogSerializer(catalog, many=True)
+    serializer = ProductSerializer(catalog, many=True)
 
     return Response({
       'catalog': serializer.data
@@ -34,7 +34,7 @@ class CatalogByCategoryView(APIView):
   
 class CatalogByIdView(APIView):
 
-  serializer_class = CatalogSerializer
+  serializer_class = ProductSerializer
 
   def get(self, request, product_id):
     catalog_dao = CatalogDAO()
@@ -45,7 +45,7 @@ class CatalogByIdView(APIView):
         'catalog': None
       })
 
-    serializer = CatalogSerializer(catalog)
+    serializer = ProductSerializer(catalog)
 
     return Response({
       'catalog': serializer.data
