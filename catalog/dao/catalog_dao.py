@@ -38,3 +38,7 @@ class CatalogDAO():
   def get_brands(self):
     brands = Brand.objects.filter()
     return brands
+
+  def decrease_stock(self, product, quantity):
+    product.stock -= quantity
+    product.save()
