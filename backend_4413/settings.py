@@ -42,9 +42,14 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
-    "*"
+    'localhost',
+    '.up.railway.app',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'https://4413backend-production.up.railway.app'
+]
 
 # Application definition
 
@@ -67,6 +72,8 @@ INSTALLED_APPS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://4413frontend-production.up.railway.app",
+    'https://4413backend-production.up.railway.app'
 ]
 
 CORS_ALLOW_HEADERS = [
