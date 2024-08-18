@@ -2,8 +2,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from identity.dao.IdentityDAO import IdentityDAO
-
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
@@ -15,9 +13,4 @@ class UserSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("Enter a valid email address.")
     return value
 
-  def create(self, validated_data):
-    identity_dao = IdentityDAO()
-    user = identity_dao.create_user(username=validated_data['username'], password=validated_data['password'])
-
-    return user
   
