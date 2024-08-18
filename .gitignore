@@ -7,3 +7,6 @@ env/
 /staticfiles/*
 !/staticfiles/.gitkeep
 
+# folders in staticfiles
+/static/*
+!/static/.gitkeep
