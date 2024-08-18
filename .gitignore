@@ -2,3 +2,8 @@
 __pycache__/
 *.py[cod]
 env/
+
+# folders in staticfiles
+/staticfiles/*
+!/staticfiles/.gitkeep
+
