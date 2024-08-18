@@ -1,11 +1,9 @@
 ## Features
-- User authentication and authorization.
+- User authentication and authorization using rest framework JWT for auth.
 - RESTful API endpoints for catalog, cart, identity, order.
 - MySQL Database management using Django ORM.
-- Asynchronous task management using Django Q.
 - Environment-specific configurations.
 - Swagger API documentation with drf_yasg.
-- Uses rest framework JWT for auth 
 
 # View documentation at:
 https://4413backend-production.up.railway.app/swagger/
