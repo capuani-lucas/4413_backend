@@ -13,7 +13,7 @@ class CartDAO():
     # Find or create cart item
     existing_cart = Cart.objects.filter(user=user, product=product).first()
     if existing_cart:
-      existing_cart.quantity += 1
+      existing_cart.quantity += quantity
       existing_cart.save()
       return
 

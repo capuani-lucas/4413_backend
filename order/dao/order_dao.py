@@ -6,7 +6,7 @@ class OrderDAO():
     orders = Order.objects.filter(user=user).order_by('-created_at')
     return orders
   
-  def create_order(self, user, product, quantity, price, first_name, last_name, address):
+  def create_order(self, user, product, quantity, price, first_name, last_name, address, card_number, card_expiry, card_cvv):
     order = Order.objects.create(
       user=user,
       product=product,
@@ -14,6 +14,9 @@ class OrderDAO():
       price=price,
       first_name=first_name,
       last_name=last_name,
-      address=address
+      address=address,
+      card_number=card_number,
+      card_expiry=card_expiry,
+      card_cvv=card_cvv
     )
     return order

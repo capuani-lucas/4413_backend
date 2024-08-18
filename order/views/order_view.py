@@ -33,6 +33,9 @@ class OrderView(APIView):
         'first_name': openapi.Schema(type=openapi.TYPE_STRING, description='First name of the user'),
         'last_name': openapi.Schema(type=openapi.TYPE_STRING, description='Last name of the user'),
         'address': openapi.Schema(type=openapi.TYPE_STRING, description='Address of the user'),
+        'card_number': openapi.Schema(type=openapi.TYPE_STRING, description='16 Digit card number'),
+        'card_expiry': openapi.Schema(type=openapi.TYPE_STRING, description='Card expiry MMYY'),
+        'card_cvv': openapi.Schema(type=openapi.TYPE_STRING, description='3 Digit CVV number'),
       }
     ),
     responses={
@@ -46,6 +49,9 @@ class OrderView(APIView):
     first_name = request.data.get('first_name')
     last_name = request.data.get('last_name')
     address = request.data.get('address')
+    card_number = request.data.get('card_number')
+    card_expiry = request.data.get('card_expiry')
+    card_cvv = request.data.get('card_cvv')
 
     serializer = OrderSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -67,7 +73,10 @@ class OrderView(APIView):
         price=cart_item.product.price,
         first_name=first_name,
         last_name=last_name,
-        address=address
+        address=address,
+        card_number=card_number,
+        card_expiry=card_expiry,
+        card_cvv=card_cvv
       )
       product_dao.decrease_stock(cart_item.product, cart_item.quantity)
       cart_dao.remove_from_cart(cart_item.id)

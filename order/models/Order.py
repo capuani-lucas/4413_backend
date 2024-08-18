@@ -16,6 +16,10 @@ class Order(models.Model):
   last_name = models.CharField(max_length=100)
   address = models.CharField(max_length=200)
 
+  card_number = models.CharField(max_length=16)
+  card_expiry = models.CharField(max_length=5)
+  card_cvv = models.CharField(max_length=3)
+
   def __str__(self):
     return self.product.name
 
@@ -28,7 +32,10 @@ class Order(models.Model):
       price=self.price,
       address=self.address,
       first_name=self.first_name,
-      last_name=self.last_name
+      last_name=self.last_name,
+      card_number=self.card_number,
+      card_expiry=self.card_expiry,
+      card_cvv=self.card_cvv
     )
     order_history.save()
   
@@ -55,6 +62,10 @@ class OrderHistory(models.Model):
   last_name = models.CharField(max_length=100)
 
   address = models.CharField(max_length=200)
+
+  card_number = models.CharField(max_length=16)
+  card_expiry = models.CharField(max_length=5)
+  card_cvv = models.CharField(max_length=3)
 
   def __str__(self):
     return self.product.name
