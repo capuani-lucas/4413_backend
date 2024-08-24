@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        .header {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+        }
+        .order-details {
+            margin: 20px 0;
+        }
+        .order-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #dddddd;
+            padding: 10px 0;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .order-product-image {
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+        .order-product-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .order-product-description {
+            margin: 5px 0;
+        }
+        .order-product-price {
+            color: #555;
+        }
+        .total-price {
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .footer {
+            background-color: #f8f8f8;
+            padding: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Thank you for your order!</h1>
+            <p>Your order has been placed successfully.</p>
+        </div>
+
+        <div class="order-details">
+            <h2>Order Details:</h2>
+
+            {% for order in orders %}
+            <div class="order-item">
+                <img src="{{ order.product.image_url }}" alt="{{ order.product.name }}" class="order-product-image">
+                <div>
+                    <div class="order-product-name">{{ order.product.name }}</div>
+                    <div class="order-product-description">{{ order.product.description }}</div>
+                    <div class="order-product-price">Quantity: {{ order.quantity }} | Price: ${{ order.price }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="total-price">
+            Total: ${{ total_price }}
+        </div>
+
+        <div class="footer">
+            <p>If you have any questions, feel free to contact us.</p>
+        </div>
+    </div>
+</body>
+</html>

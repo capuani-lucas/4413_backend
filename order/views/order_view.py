@@ -8,6 +8,7 @@ from drf_yasg import openapi
 
 from order.dao.order_dao import OrderDAO
 from order.serializers.order_serializer import OrderSerializer
+from order.service.order_service import send_order_confirmation_email
 
 class OrderView(APIView):
 
@@ -65,8 +66,9 @@ class OrderView(APIView):
     
     order_dao = OrderDAO()
     product_dao = CatalogDAO()
+    orders = []
     for cart_item in cart_items:
-      order_dao.create_order(
+      order = order_dao.create_order(
         user=user,
         product=cart_item.product,
         quantity=cart_item.quantity,
@@ -78,7 +80,9 @@ class OrderView(APIView):
         card_expiry=card_expiry,
         card_cvv=card_cvv
       )
+      orders.append(order)
       product_dao.decrease_stock(cart_item.product, cart_item.quantity)
       cart_dao.remove_from_cart(cart_item.id)
     
+    send_order_confirmation_email(user.email, orders)
     return Response(status=201)
