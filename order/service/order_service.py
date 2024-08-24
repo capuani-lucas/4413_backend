@@ -8,7 +8,7 @@ from order.models.Order import Order
 def get_total_price(orders: list[Order]) -> float:
   total_price = 0
   for order in orders:
-    total_price += order.price
+    total_price += order.price * order.quantity
   return total_price
 
 def send_order_confirmation_email(user_email, orders: list[Order]):
