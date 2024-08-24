@@ -4,6 +4,7 @@
 - MySQL Database management using Django ORM.
 - Environment-specific configurations.
 - Swagger API documentation with drf_yasg.
+- Email confirmations with Sendgrid
 
 # View documentation at:
 https://4413backend-production.up.railway.app/swagger/
@@ -39,3 +40,11 @@ python manage.py createsuperuser
 ```
 python manage.py runserver
 ```
+
+## Sending Emails
+
+Set SENDGRID_ENABLED=True in env
+Get an API key from Sendgrid and set SENDGRID_API_KEY=...
+Set SENDGRID_FROM_EMAIL=...
+
+
