@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: dev
+      MYSQL_DATABASE: EECS4413Backend
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py createsuperuser --noinput --username test@mail.com --email test@mail.com &&
+             python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=test@mail.com
+      - DJANGO_SUPERUSER_PASSWORD=test
+      - DJANGO_SUPERUSER_EMAIL=test@mail.com
+      - SECRET_KEY='django-insecure-qf(y3h)#hsl#a+cai!8bwjge2ke9acfcusdw^&a7-_(m4m4802'
+      - DEBUG=True
+      - ENVIRONMENT='development'
+
+      - DB_NAME=EECS4413Backend
+      - DB_USER=admin
+      - DB_PASSWORD=dev
+      - DB_HOST=db
+      - DB_PORT=3306
+
+      - SENDGRID_API_KEY=replace_me
+      - SENDGRID_ENABLED=False
+      - SENDGRID_FROM_EMAIL=capuani@my.yorku.ca
+
+volumes:
+  mysql_data:
